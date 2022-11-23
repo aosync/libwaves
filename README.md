@@ -27,7 +27,7 @@ H = lambda w: 1.0 if np.abs(w) < 1*2*np.pi else 0.0
 # with corresponding return value of function
 Xx = Fx.convofrf(H)
 
-f, Pxx = Xx.power()
-plt.stem(f/2/np.pi, Pxx)
+t = np.linspace(0, 10, 1000)
+plt.plot(t, Xx(t))
 plt.show()
 ```
