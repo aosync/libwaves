@@ -100,8 +100,8 @@ class Signal:
 	def convofrf(self, frf):
 		oscillators = {}
 		
-		for oscillator in self.oscillators:
-			oscillators[oscillator[0]] = oscillator[1] * frf(oscillator[0])
+		for freq, val in self.oscillators.items():
+			oscillators[freq] = val * frf(freq)
 		
 		return Signal(oscillators)
 	

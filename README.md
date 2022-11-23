@@ -6,9 +6,6 @@ Python library to manipulate linear combinations of harmonic oscillators
 ## Example
 
 ```py
-import numpy as np
-from libwaves import *
-
 n = 3
 omega = 8/60*2*np.pi
 
