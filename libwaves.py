@@ -24,7 +24,6 @@ class Signal:
 		
 		return r
 		
-	
 	def __add__(self, rhs):
 		oscillators = {}
 	
@@ -74,9 +73,12 @@ class Signal:
 	def __truediv__(self, scalar):
 		return self * (1/scalar)
 	
+	# Get a tuple of frequencies and their associated Fourier coefficient
 	def freqs(self):
 		return np.array(list(self.oscillators.keys())), np.array(list(self.oscillators.values()))
 	
+	# Get a tuple of frequencies and their associated Fourier coefficient
+	# but fold back the negative frequencies over the positive frequencies
 	def realfreqs(self):
 		foldback = {}
 		
@@ -87,16 +89,21 @@ class Signal:
 			foldback[np.abs(freq)] += val
 		
 		return np.array(list(foldback.keys())), np.array(list(foldback.values()))
-			
 	
+	# Calculate the power spectrum over the entire spectrum
 	def power(self):
 		f, Fxx = self.freqs()
 		return f, np.abs(Fxx)**2
 	
+	# Calculate the power spectrum by folding back negative frequencies to positive
+	# frequencies. Useful if the signal is real
 	def realpower(self):
 		f, Fxx = self.realfreqs()
 		return f, np.abs(Fxx)**2
 	
+	# Multiply Fourier coefficient at freq w with value of function
+	# evaluated at w. Typically, if frf is a frequency response function,
+	# this allows for evaluating the response
 	def convofrf(self, frf):
 		oscillators = {}
 		
