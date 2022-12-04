@@ -83,10 +83,13 @@ class Signal:
 		foldback = {}
 		
 		for freq, val in self.oscillators.items():
-			if not np.abs(freq) in foldback:
-				foldback[np.abs(freq)] = np.complex128(0)
+			if freq < 0.0:
+				continue
+		
+			if not freq in foldback:
+				foldback[freq] = np.complex128(0)
 				
-			foldback[np.abs(freq)] += val
+			foldback[freq] += 2 * val
 		
 		return np.array(list(foldback.keys())), np.array(list(foldback.values()))
 	
@@ -99,7 +102,7 @@ class Signal:
 	# frequencies. Useful if the signal is real
 	def realpower(self):
 		f, Fxx = self.realfreqs()
-		return f, np.abs(Fxx)**2
+		return f, np.abs(Fxx)**2 / 2
 	
 	# Multiply Fourier coefficient at freq w with value of function
 	# evaluated at w. Typically, if frf is a frequency response function,
